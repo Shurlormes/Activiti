@@ -72,4 +72,14 @@ public class IntermediateTest {
         taskList.forEach(i -> System.out.println(i));
     }
 
+    @Test
+    public void compensation() {
+        Deployment deployment = repositoryService.createDeployment().name("银行转账回退流程")
+                .addClasspathResource("processes/compensationIntermediateTest.bpmn").deploy();
+
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).singleResult();
+
+        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
+    }
+
 }
