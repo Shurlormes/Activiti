@@ -26,6 +26,10 @@ public class ActivitiConfig extends AbstractProcessEngineAutoConfiguration {
         springProcessEngineConfiguration.setActivityFontName("宋体");
         springProcessEngineConfiguration.setAnnotationFontName("宋体");
         springProcessEngineConfiguration.setLabelFontName("宋体");
+        /*springProcessEngineConfiguration.setMailServerHost("stmp.163.com");
+        springProcessEngineConfiguration.setMailServerPort(25);
+        springProcessEngineConfiguration.setMailServerUsername("username");
+        springProcessEngineConfiguration.setMailServerPassword("password");*/
         return springProcessEngineConfiguration;
     }
 }
