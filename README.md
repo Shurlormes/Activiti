@@ -258,6 +258,9 @@ springProcessEngineConfiguration.setAnnotationFontName("宋体");
 springProcessEngineConfiguration.setLabelFontName("宋体");
 ```
 
+#### 无法序列化，`org.activiti.engine.ActivitiException: couldn't find a variable type that is able to serialize com.voidforce.activiti.task.ServiceTask@4d79d187`
+Activiti 会将模板中使用到的Bean存在表`act_ru_variable`中，所以类必须实现`Serializable`接口。
+
 ## 参考资料
 <div id="docs"></div>
 
