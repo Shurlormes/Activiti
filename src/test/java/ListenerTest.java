@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +52,20 @@ public class ListenerTest {
         task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
         System.out.println(task.getProcessVariables().get("variableTest"));
         System.out.println(task.getTaskLocalVariables().get("variableTest"));
+    }
+
+    @Test
+    public void classListenerTest() {
+        Deployment deployment = repositoryService.createDeployment().name("Class监听器测试")
+            .addClasspathResource("processes/listenerClassTest.bpmn").deploy();
+
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+            .deploymentId(deployment.getId()).singleResult();
+
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("dynamicTestValue", "动态数据测试");
+        runtimeService.startProcessInstanceById(processDefinition.getId(), variables);
+
     }
 
 }
