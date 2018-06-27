@@ -6,7 +6,6 @@ import com.voidforce.activiti.bean.UserInfo;
 import com.voidforce.activiti.service.departmentRole.DepartmentRoleService;
 import com.voidforce.activiti.service.role.RoleService;
 import com.voidforce.activiti.service.userInfo.UserInfoService;
-import com.voidforce.activiti.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +26,7 @@ public class IndexController {
     @Autowired
     private DepartmentRoleService departmentRoleService;
 
-    @GetMapping("")
+    @GetMapping("/get")
     public String index(Model model) {
 
         UserInfo userByName = userInfoService.getByName("张三");
@@ -49,11 +48,4 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        if(SessionUtil.currentUserDeatils() != null) {
-            return "redirect:/";
-        }
-        return "login";
-    }
 }
