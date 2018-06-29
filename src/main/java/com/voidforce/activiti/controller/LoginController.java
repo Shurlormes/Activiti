@@ -1,5 +1,6 @@
 package com.voidforce.activiti.controller;
 
+import com.voidforce.activiti.bean.UserInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 	@GetMapping("/")
 	public String login() {
-		return "redirect:http://localhost:3000/";
+		return "login";
 	}
 
 	@PostMapping("/post")
 	@ResponseBody
-	public String doPost() {
+	public String doPost(@ModelAttribute UserInfo userInfo) {
 		return "success";
 	}
 
 	@PutMapping("/put")
 	@ResponseBody
-	public String doPut() {
+	public String doPut(@ModelAttribute UserInfo userInfo, @RequestParam(required = false) Boolean remember) {
 		return "success";
 	}
 
@@ -31,7 +32,7 @@ public class LoginController {
 
 	@GetMapping("/get")
 	@ResponseBody
-	public String doGet() {
+	public String doGet(@RequestParam String username, @RequestParam String password) {
 		return "success";
 	}
 }

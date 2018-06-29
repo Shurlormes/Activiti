@@ -13,12 +13,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    //@Autowired
-    //private CorsFilter corsFilter;
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http//.addFilterBefore(corsFilter, SessionManagementFilter.class)
+        http
+            .cors()
+            .and()
+            .csrf().disable()
 	        .authorizeRequests()
             .antMatchers("/post", "/put", "/delete", "/get").permitAll()
             .anyRequest().authenticated()
