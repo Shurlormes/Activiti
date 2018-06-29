@@ -1,11 +1,14 @@
 package com.voidforce.activiti.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserInfo extends BaseUser {
 
     private Long UserInfoId;
 
     private String name;
 
+    @JsonIgnore
     private String password;
 
     private Long departmentId;
@@ -40,5 +43,10 @@ public class UserInfo extends BaseUser {
 
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.name;
     }
 }

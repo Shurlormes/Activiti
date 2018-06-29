@@ -3,6 +3,7 @@ package com.voidforce.activiti.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
@@ -21,6 +22,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			//设置允许的请求头
 			.allowedHeaders(CorsConfiguration.ALL)
 			//跨域允许时间
-			.maxAge(3600);
+			.maxAge(10000);
+	}
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("redirect:http://localhost:3000");
 	}
 }

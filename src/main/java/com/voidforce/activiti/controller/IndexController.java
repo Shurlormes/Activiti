@@ -9,8 +9,7 @@ import com.voidforce.activiti.service.userInfo.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +47,12 @@ public class IndexController {
         model.addAttribute("number", number);
 
         return "index";
+    }
+
+    @PostMapping("/post")
+    @ResponseBody
+    public String indexPost(@ModelAttribute UserInfo userInfo) {
+        return "index" + userInfo.getName();
     }
 
 }

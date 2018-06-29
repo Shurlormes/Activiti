@@ -1,4 +1,4 @@
-package com.voidforce.activiti.config;
+package com.voidforce.activiti.config.security;
 
 import com.voidforce.activiti.bean.DepartmentRole;
 import com.voidforce.activiti.bean.UserInfo;

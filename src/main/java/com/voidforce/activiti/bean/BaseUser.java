@@ -12,6 +12,7 @@ import java.util.List;
 public class BaseUser implements UserDetails {
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private Collection<GrantedAuthority> authorities;

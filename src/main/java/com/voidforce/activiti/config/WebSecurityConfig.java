@@ -1,5 +1,8 @@
 package com.voidforce.activiti.config;
 
+import com.voidforce.activiti.config.security.CustomAuthenticationFailureHandler;
+import com.voidforce.activiti.config.security.CustomAuthenticationSuccessHandler;
+import com.voidforce.activiti.config.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,21 +16,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .cors()
+        http.authorizeRequests()
+                .antMatchers("/", "/login").permitAll()
+                .anyRequest().authenticated()
             .and()
-            .csrf().disable()
-	        .authorizeRequests()
-            .antMatchers("/post", "/put", "/delete", "/get").permitAll()
-            .anyRequest().authenticated()
+                .formLogin()
+                .loginProcessingUrl("/login")
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler)
             .and()
-            .formLogin()
-            .loginPage("/").permitAll()
-            .defaultSuccessUrl("/")
+                .logout().permitAll()
             .and()
-            .logout().permitAll();
+                .cors()
+            .and()
+                .csrf().disable();
     }
 
     @Override
