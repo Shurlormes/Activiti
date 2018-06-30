@@ -1,21 +1,17 @@
 package com.voidforce.activiti.controller;
 
-import com.voidforce.activiti.bean.DepartmentRole;
-import com.voidforce.activiti.bean.Role;
 import com.voidforce.activiti.bean.UserInfo;
+import com.voidforce.activiti.common.bean.HashMapResult;
 import com.voidforce.activiti.service.departmentRole.DepartmentRoleService;
 import com.voidforce.activiti.service.role.RoleService;
 import com.voidforce.activiti.service.userInfo.UserInfoService;
+import com.voidforce.activiti.util.JsonUtil;
+import com.voidforce.activiti.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Controller
-@RequestMapping("/test")
+@RestController
 public class IndexController {
 
     @Autowired
@@ -27,32 +23,16 @@ public class IndexController {
     @Autowired
     private DepartmentRoleService departmentRoleService;
 
-    @GetMapping("/get")
-    public String index(Model model) {
-
-        UserInfo userByName = userInfoService.getByName("张三");
-
-        Role role = roleService.getByName("ROLE_ADMIN");
-
-        DepartmentRole departmentRole = new DepartmentRole();
-
-        departmentRole.setDepartmentId(1L);
-
-        List<DepartmentRole> departmentRoleList = departmentRoleService.findBy(departmentRole);
-
-        List<String> number = new ArrayList<>();
-        number.add("ROLE_ADMIN");
-        number.add("ROLE_USER");
-
-        model.addAttribute("number", number);
-
-        return "index";
-    }
-
-    @PostMapping("/post")
-    @ResponseBody
-    public String indexPost(@ModelAttribute UserInfo userInfo) {
-        return "index" + userInfo.getName();
+    @GetMapping("/")
+    public String index() {
+        UserInfo userInfo = SessionUtil.currentUserDeatils();
+        HashMapResult result;
+        if(userInfo == null) {
+            result = HashMapResult.failure(null);
+        } else {
+            result = HashMapResult.success(null, userInfo);
+        }
+        return JsonUtil.convertObject2Json(result);
     }
 
 }

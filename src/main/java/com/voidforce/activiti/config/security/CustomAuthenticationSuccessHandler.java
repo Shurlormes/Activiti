@@ -15,12 +15,12 @@ import java.io.PrintWriter;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-                                        HttpServletResponse httpServletResponse,
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        PrintWriter out = httpServletResponse.getWriter();
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter out = response.getWriter();
         HashMapResult result = HashMapResult.success("登录成功", SessionUtil.currentUserDeatils());
         out.write(JsonUtil.convertObject2Json(result));
         out.flush();

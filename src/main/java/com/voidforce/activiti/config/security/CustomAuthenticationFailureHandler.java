@@ -17,12 +17,12 @@ import java.io.PrintWriter;
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
-                                        HttpServletResponse httpServletResponse,
+    public void onAuthenticationFailure(HttpServletRequest request,
+                                        HttpServletResponse response,
                                         AuthenticationException e) throws IOException {
 
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        PrintWriter out = httpServletResponse.getWriter();
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter out = response.getWriter();
         HashMapResult result;
         if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException) {
             result = HashMapResult.failure("用户名或密码输入错误，登录失败!");

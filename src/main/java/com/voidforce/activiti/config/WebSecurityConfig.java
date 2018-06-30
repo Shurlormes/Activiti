@@ -1,5 +1,6 @@
 package com.voidforce.activiti.config;
 
+import com.voidforce.activiti.config.security.CustomAuthenticationEntryPoint;
 import com.voidforce.activiti.config.security.CustomAuthenticationFailureHandler;
 import com.voidforce.activiti.config.security.CustomAuthenticationSuccessHandler;
 import com.voidforce.activiti.config.security.CustomUserDetailsService;
@@ -22,18 +23,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/login").permitAll()
                 .successHandler(customAuthenticationSuccessHandler)
                 .failureHandler(customAuthenticationFailureHandler)
+	        .and()
+	            .exceptionHandling()
+	            .authenticationEntryPoint(customAuthenticationEntryPoint)
             .and()
-                .logout().permitAll()
+                .logout().logoutSuccessUrl("/").permitAll()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
             .and()
                 .cors()
             .and()
