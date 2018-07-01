@@ -1,6 +1,7 @@
 package com.voidforce.activiti.service.userInfo.impl;
 
 import com.voidforce.activiti.bean.UserInfo;
+import com.voidforce.activiti.common.enums.DeletedEnum;
 import com.voidforce.activiti.mapper.userInfo.UserInfoMapper;
 import com.voidforce.activiti.service.userInfo.UserInfoService;
 import com.voidforce.activiti.util.EncodeUtil;
@@ -20,23 +21,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public Long insert(UserInfo userInfo) {
-        UserInfo dbUserInfo = this.getByName(userInfo.getName());
+        UserInfo dbUserInfo = this.getByUsername(userInfo.getUsername());
         if(dbUserInfo == null) {
             userInfo.setPassword(EncodeUtil.encodeByBCrypt(userInfo.getPassword()));
             userInfoMapper.insert(userInfo);
             return userInfo.getUserInfoId();
         }
-        logger.warn("{} 已存在", userInfo.getName());
+        logger.warn("{} 已存在", userInfo.getUsername());
         return dbUserInfo.getUserInfoId();
     }
 
     @Override
     public UserInfo getById(Long userInfoId) {
-        return userInfoMapper.getById(userInfoId);
+        return userInfoMapper.getById(userInfoId, DeletedEnum.NOT_DELETED.getCode());
     }
 
     @Override
-    public UserInfo getByName(String name) {
-        return userInfoMapper.getByName(name);
+    public UserInfo getByUsername(String username) {
+        return userInfoMapper.getByUsername(username, DeletedEnum.NOT_DELETED.getCode());
     }
 }

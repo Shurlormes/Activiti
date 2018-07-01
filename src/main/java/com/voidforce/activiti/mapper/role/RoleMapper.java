@@ -7,22 +7,27 @@ import java.util.List;
 
 public interface RoleMapper {
 
-    @Insert("INSERT INTO ROLE (ROLE_NAME) VALUES (#{roleName})")
-    @Options(useGeneratedKeys = true, keyProperty = "roleId")
+    @Insert(" INSERT INTO ROLE (ROLE, ROLE_NAME, DELETED) " +
+            " VALUES (#{role}, #{roleName}, #{deleted}) ")
+    @Options(keyProperty = "roleId", useGeneratedKeys = true)
     void insert(Role role);
 
-
-    @Select("SELECT * FROM ROLE WHERE ROLE_ID = #{roleId}")
+    @Select(" SELECT * FROM ROLE WHERE DELETED = #{deleted} AND ROLE = #{role} ")
     @Results(
             id = "simpleMapper",
             value = {
-                    @Result(property = "roleId", column = "ROLE_ID"),
-                    @Result(property = "name", column = "NAME")
+                    @Result(column = "ROLE_ID", property = "roleId"),
+                    @Result(column = "ROLE", property = "role"),
+                    @Result(column = "ROLE_NAME", property = "roleName"),
+                    @Result(column = "DELETED", property = "deleted")
             }
     )
-    Role getById(Long roleId);
+    Role getByRole(@Param("role") String role, @Param("deleted") Integer deleted);
 
-    @Select("SELECT * FROM ROLE WHERE NAME = #{name}")
+    @Select(" SELECT T1.* FROM ROLE T1 " +
+            " INNER JOIN USER_ROLE T2 " +
+            " ON T2.DELETED = #{deleted} AND USER_INFO_ID = #{userInfoId} AND T2.ROLE_ID = T1.ROLE_ID " +
+            " WHERE T1.DELETED = #{deleted} ")
     @ResultMap("simpleMapper")
-    Role getByName(String name);
+    List<Role> findByUserInfoId(@Param("userInfoId") Long userInfoId, @Param("deleted") Integer deleted);
 }

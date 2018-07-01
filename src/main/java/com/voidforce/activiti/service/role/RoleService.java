@@ -7,7 +7,7 @@ import java.util.List;
 public interface RoleService {
     Long insert(Role role);
 
-    Role getById(Long roleId);
+    Role getByRole(String role);
 
-    Role getByName(String name);
+    List<Role> findByUserInfoId(Long userInfoId);
 }

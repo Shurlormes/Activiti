@@ -67,13 +67,4 @@ public class BaseUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public List<String> getRoles() {
-        List<String> role = new ArrayList<>();
-        if(!CollectionUtils.isEmpty(this.authorities)) {
-            this.authorities.forEach(i -> role.add(i.getAuthority()));
-        }
-
-        return role;
-    }
 }

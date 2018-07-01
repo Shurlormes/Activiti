@@ -8,5 +8,5 @@ public interface UserInfoService {
 
     UserInfo getById(Long userInfoId);
 
-    UserInfo getByName(String name);
+    UserInfo getByUsername(String username);
 }

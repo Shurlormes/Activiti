@@ -16,28 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `department`
+-- Table structure for table `user_role`
 --
 
-DROP TABLE IF EXISTS `department`;
+DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `department` (
-  `DEPARTMENT_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `PARENT_ID` bigint(20) DEFAULT NULL,
-  `NAME` varchar(50) NOT NULL,
-  PRIMARY KEY (`DEPARTMENT_ID`)
+CREATE TABLE `user_role` (
+  `USER_ROLE_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `USER_INFO_ID` bigint(20) DEFAULT NULL,
+  `ROLE_ID` bigint(20) DEFAULT NULL,
+  `DELETED` tinyint(2) DEFAULT '0',
+  PRIMARY KEY (`USER_ROLE_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `department`
+-- Dumping data for table `user_role`
 --
 
-LOCK TABLES `department` WRITE;
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,0,'经理'),(2,1,'员工');
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,1,1,0),(2,2,2,0);
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-29 21:27:48
+-- Dump completed on 2018-07-02  0:19:04

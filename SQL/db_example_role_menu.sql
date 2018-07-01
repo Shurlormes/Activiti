@@ -16,29 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_info`
+-- Table structure for table `role_menu`
 --
 
-DROP TABLE IF EXISTS `user_info`;
+DROP TABLE IF EXISTS `role_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `user_info` (
-  `USER_INFO_ID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `USERNAME` varchar(64) NOT NULL,
-  `PASSWORD` varchar(255) DEFAULT NULL,
+CREATE TABLE `role_menu` (
+  `ROLE_MENU_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ROLE_ID` bigint(20) DEFAULT NULL,
+  `MENU_ID` bigint(20) DEFAULT NULL,
   `DELETED` tinyint(2) DEFAULT '0',
-  PRIMARY KEY (`USER_INFO_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`ROLE_MENU_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_info`
+-- Dumping data for table `role_menu`
 --
 
-LOCK TABLES `user_info` WRITE;
-/*!40000 ALTER TABLE `user_info` DISABLE KEYS */;
-INSERT INTO `user_info` VALUES (1,'zhangsan','$2a$10$7705eSFvHC9jOnrpGSc7N.x/AEJguK/y6B/P3d2Q.qZo6O8F7dRlK',0),(2,'lisi','$2a$10$7705eSFvHC9jOnrpGSc7N.x/AEJguK/y6B/P3d2Q.qZo6O8F7dRlK',0);
-/*!40000 ALTER TABLE `user_info` ENABLE KEYS */;
+LOCK TABLES `role_menu` WRITE;
+/*!40000 ALTER TABLE `role_menu` DISABLE KEYS */;
+INSERT INTO `role_menu` VALUES (1,1,1,0),(2,1,2,0),(3,1,3,0),(4,1,4,0),(5,1,5,0),(6,1,6,0),(7,1,7,0),(8,1,8,0),(9,2,1,0),(10,2,2,0),(11,1,9,0),(12,1,10,0);
+/*!40000 ALTER TABLE `role_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-02  0:19:01
+-- Dump completed on 2018-07-02  0:19:09
