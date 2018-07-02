@@ -22,7 +22,7 @@ public class SimpleIdentityService {
 	public String updateUser(String id, String name) {
 		User dbUser = identityService.createUserQuery().userId(id).singleResult();
 		if (dbUser != null) {
-			logger.warn("user {}-{} already exists", id, name);
+			logger.warn("user {}-{} already exists, will do update", id, name);
 
 			dbUser.setFirstName(name);
 			identityService.saveUser(dbUser);
@@ -43,7 +43,7 @@ public class SimpleIdentityService {
 	public String updateGroup(String id, String name) {
 		Group dbGroup = identityService.createGroupQuery().groupId(id).singleResult();
 		if (dbGroup != null) {
-			logger.warn("group {}-{} already exists", id, name);
+			logger.warn("group {}-{} already exists, will do update", id, name);
 
 			dbGroup.setName(name);
 			identityService.saveGroup(dbGroup);
@@ -62,8 +62,21 @@ public class SimpleIdentityService {
 	}
 
 	public String updateMemberShip(String userId, String groupId) {
+		User user = identityService.createUserQuery().userId(userId).singleResult();
+		if(user == null) {
+			logger.warn("user {} not exists", userId);
+			return JsonUtil.convertObject2Json(HashMapResult.failure("user " + userId + " not exists"));
+		}
+
+		Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+		if(group == null) {
+			logger.warn("group {} not exists", userId);
+			return JsonUtil.convertObject2Json(HashMapResult.failure("group " + userId + " not exists"));
+		}
+
 		this.deleteMemberShip(userId, groupId);
 		identityService.createMembership(userId, groupId);
+
 		return JsonUtil.convertObject2Json(HashMapResult.success());
 	}
 
