@@ -1,16 +1,10 @@
 import com.voidforce.activiti.Application;
-import com.voidforce.activiti.service.department.DepartmentService;
-import com.voidforce.activiti.service.departmentRole.DepartmentRoleService;
-import com.voidforce.activiti.service.userInfo.UserInfoService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
