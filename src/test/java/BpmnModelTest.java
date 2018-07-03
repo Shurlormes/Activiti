@@ -1,7 +1,11 @@
 import com.voidforce.activiti.Application;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
-import org.activiti.engine.*;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +27,23 @@ public class BpmnModelTest {
 
     @Test
     public void test() {
-        repositoryService.createDeployment().name("Model From Bpmn").addBpmnModel("Model From Bpmn", this.generateBpmnModel()).deploy();
+        Deployment deployment = repositoryService.createDeployment()
+            .key("Model From Bpmn Key").name("Model From Bpmn")
+            .addBpmnModel("Model From Bpmn", this.generateBpmnModel()).deploy();
+
+        System.out.println(deployment.getId());
+
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+            .deploymentId(deployment.getId()).singleResult();
+
+        //runtimeService.startProcessInstanceById(processDefinition.getId());
+    }
+
+    @Test
+    public void test2() {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+            .deploymentId("45001").singleResult();
+        runtimeService.startProcessInstanceById(processDefinition.getId());
     }
 
 
@@ -51,7 +71,9 @@ public class BpmnModelTest {
         process.addFlowElement(new SequenceFlow("startEvent", "BpmnModel Task Id"));
         process.addFlowElement(new SequenceFlow("BpmnModel Task Id", "endEvent"));
 
+
         bpmnModel.addProcess(process);
+
 
         return bpmnModel;
     }
