@@ -1,6 +1,9 @@
 package com.voidforce.activiti.service.userInfo;
 
+import com.github.pagehelper.PageInfo;
 import com.voidforce.activiti.bean.UserInfo;
+
+import java.util.List;
 
 public interface UserInfoService {
 
@@ -9,4 +12,8 @@ public interface UserInfoService {
     UserInfo getById(Long userInfoId);
 
     UserInfo getByUsername(String username);
+
+    List<UserInfo> findAll(UserInfo userInfo);
+
+    PageInfo<UserInfo> findAllForPage(Integer page, Integer limit, UserInfo userInfo);
 }

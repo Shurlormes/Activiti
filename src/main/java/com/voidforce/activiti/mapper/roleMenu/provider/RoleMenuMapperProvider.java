@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.*;
 public class RoleMenuMapperProvider {
 
     public String deleteBy(RoleMenu roleMenu) {
-
         roleMenu.setDeleted(DeletedEnum.DELETED.getCode());
         StringBuilder sql = new StringBuilder(" UPDATE ROLE_MENU SET DELETED = #{deleted} " +
                 " WHERE 1=1 ");
@@ -26,7 +25,5 @@ public class RoleMenuMapperProvider {
 
         return sql.toString();
     }
-
-
 
 }

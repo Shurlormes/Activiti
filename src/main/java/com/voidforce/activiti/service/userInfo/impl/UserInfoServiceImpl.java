@@ -1,5 +1,7 @@
 package com.voidforce.activiti.service.userInfo.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.voidforce.activiti.bean.UserInfo;
 import com.voidforce.activiti.common.enums.DeletedEnum;
 import com.voidforce.activiti.mapper.userInfo.UserInfoMapper;
@@ -10,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -39,5 +43,17 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getByUsername(String username) {
         return userInfoMapper.getByUsername(username, DeletedEnum.NOT_DELETED.getCode());
+    }
+
+    @Override
+    public List<UserInfo> findAll(UserInfo userInfo) {
+        return userInfoMapper.findAll(userInfo);
+    }
+
+    @Override
+    public PageInfo<UserInfo> findAllForPage(Integer page, Integer limit, UserInfo userInfo) {
+        PageHelper.startPage(page, limit);
+        List<UserInfo> userInfoList = this.findAll(userInfo);
+        return new PageInfo<>(userInfoList);
     }
 }
