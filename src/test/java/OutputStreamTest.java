@@ -1,6 +1,7 @@
 import com.voidforce.activiti.Application;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,18 +21,22 @@ public class OutputStreamTest {
     private RepositoryService repositoryService;
 
     @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
     private HistoryService historyService;
 
     @Test
     public void outputQuery() throws IOException {
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionKey("signalTest").orderByProcessDefinitionId().desc().list().get(0);
+                .deploymentId("72501").singleResult();
+
 
         InputStream is = repositoryService.getProcessDiagram(processDefinition.getId());
-        readStreamPng(is, "signalTest.png");
+        readStreamPng(is, "process.png");
 
         is = repositoryService.getProcessModel(processDefinition.getId());
-        readStreamXml(is, "signalTest.bpmn");
+        readStreamXml(is, "process.bpmn");
     }
 
     private void readStreamXml(InputStream is, String fileName) throws IOException {

@@ -1,4 +1,5 @@
 import com.voidforce.activiti.Application;
+import org.activiti.bpmn.BpmnAutoLayout;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
 import org.activiti.engine.RepositoryService;
@@ -96,7 +97,7 @@ public class BpmnModelTest {
         process.addFlowElement(createSequenceFlow("task2", "end"));
 
         // 2. Generate graphical information
-        //new BpmnAutoLayout(model).execute();
+	    new BpmnAutoLayout(model).execute();
 
         // 3. Deploy the process to the engine
         Deployment deployment = repositoryService.createDeployment()
