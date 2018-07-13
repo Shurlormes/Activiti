@@ -2,16 +2,18 @@ import com.voidforce.activiti.Application;
 import org.activiti.bpmn.BpmnAutoLayout;
 import org.activiti.bpmn.model.*;
 import org.activiti.bpmn.model.Process;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
@@ -25,6 +27,12 @@ public class BpmnModelTest {
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private IdentityService identityService;
+
+    @Autowired
+    private ManagementService managementService;
 
     @Test
     public void test() {
@@ -86,6 +94,7 @@ public class BpmnModelTest {
         Process process = new Process();
         model.addProcess(process);
         process.setId("my-process");
+        process.setName("my-process-name");
 
         process.addFlowElement(createStartEvent());
         process.addFlowElement(createUserTask("task1", "First task", "fred"));
@@ -124,6 +133,59 @@ public class BpmnModelTest {
 //            .getResourceAsStream(deployment.getId(), "dynamic-model.bpmn");
 //        FileUtils.copyInputStreamToFile(processBpmn,
 //            new File("target/process.bpmn20.xml"));
+    }
+
+    @Test
+    public void start() {
+        identityService.setAuthenticatedUserId("jone");
+        ProcessInstance processInstance = runtimeService.startProcessInstanceById("my-process:1:80004");
+        runtimeService.startProcessInstanceById("my-process:1:80004");
+        runtimeService.startProcessInstanceById("my-process:1:80004");
+        runtimeService.startProcessInstanceById("my-process:1:80004");
+
+        System.out.println(processInstance);
+    }
+
+    @Test
+    public void query() {
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().startedBy("jone").list().get(0);
+        System.out.println(processInstance.getName());
+        System.out.println(processInstance.getId());
+        System.out.println(processInstance.getProcessDefinitionId());
+        System.out.println(processInstance.getProcessDefinitionName());
+//        System.out.println(runtimeService.createProcessInstanceQuery().processInstanceId("90001").list());
+//        System.out.println(runtimeService.createExecutionQuery().processInstanceId("90001").onlyChildExecutions().list());
+    }
+
+    @Test
+    public void queryTask() {
+        List<Task> taskList = taskService.createTaskQuery().executionId("90002").list();
+        for (Task task : taskList) {
+            System.out.println(task);
+        }
+
+        taskList = taskService.createTaskQuery().processInstanceId("90001").list();
+        for (Task task : taskList) {
+            System.out.println(task);
+        }
+    }
+
+    @Test
+    public void complete() {
+        List<Task> taskList = taskService.createTaskQuery().processInstanceId("102501").list();
+
+        for (Task task : taskList) {
+            taskService.complete(task.getId());
+        }
+    }
+
+    @Test
+    public void delete() {
+        List<Task> taskList = taskService.createTaskQuery().processInstanceId("102501").list();
+
+        for (Task task : taskList) {
+            taskService.deleteTask(task.getId(), "删除任务测试（驳回）");
+        }
     }
 
     public UserTask createUserTask(String id, String name, String assignee) {

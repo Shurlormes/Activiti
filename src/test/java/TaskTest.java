@@ -7,7 +7,6 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,6 +93,14 @@ public class TaskTest {
         taskList = taskService.createTaskQuery().taskCandidateGroup(DEVELOPER_GROUP_ID).list();
         System.out.println("developer组的任务数：" + taskList.size());
         System.out.println(taskList.toString());
+    }
+
+    @Test
+    public void query() {
+        List<Task> taskList = taskService.createTaskQuery().taskOwner("25").list();
+        for (Task task : taskList) {
+            System.out.println(task.getProcessInstanceId());
+        }
     }
 
 }
