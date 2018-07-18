@@ -1,7 +1,6 @@
 package com.voidforce.activiti.mapper.userInfo;
 
 import com.voidforce.activiti.bean.UserInfo;
-import com.voidforce.activiti.common.enums.DeletedEnum;
 import com.voidforce.activiti.mapper.userInfo.provider.UserInfoMapperProvider;
 import org.apache.ibatis.annotations.*;
 
@@ -32,4 +31,7 @@ public interface UserInfoMapper {
     @SelectProvider(method = "findAll", type = UserInfoMapperProvider.class)
     @ResultMap("simpleMapper")
     List<UserInfo> findAll(UserInfo userInfo);
+
+    @Update(" UPDATE USER_INFO SET DELETED = 1 WHERE USER_INFO_ID = #{userInfoId} ")
+    void delete(Long userInfoId);
 }

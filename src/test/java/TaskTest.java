@@ -103,4 +103,11 @@ public class TaskTest {
         }
     }
 
+    @Test
+    public void start() {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId("id-eeb0e5ad-0bde-4bf4-9844-64568a112f64:1:122504").singleResult();
+        System.out.println(processDefinition);
+        runtimeService.startProcessInstanceById("id-eeb0e5ad-0bde-4bf4-9844-64568a112f64:1:122504");
+    }
+
 }

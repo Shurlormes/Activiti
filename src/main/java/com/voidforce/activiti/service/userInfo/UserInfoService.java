@@ -16,4 +16,6 @@ public interface UserInfoService {
     List<UserInfo> findAll(UserInfo userInfo);
 
     PageInfo<UserInfo> findAllForPage(Integer page, Integer limit, UserInfo userInfo);
+
+    void delete(Long userInfoId);
 }

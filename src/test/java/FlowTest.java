@@ -94,7 +94,7 @@ public class FlowTest {
         System.out.println("当前任务是" + task);
 
         Map<String, Object> variables = new HashMap<>();
-        variables.put("expression", true);
+        taskService.addComment(task.getId(), processInstance.getId(), "备注备备注");
         taskService.complete(task.getId(), variables);
 
 
@@ -102,11 +102,11 @@ public class FlowTest {
 
         System.out.println("当前任务是" + task);
 
-        taskService.complete(task.getId(), variables);
+        /*taskService.complete(task.getId(), variables);
 
         task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 
-        System.out.println("当前任务是" + task);
+        System.out.println("当前任务是" + task);*/
     }
 
     @Test

@@ -56,4 +56,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         List<UserInfo> userInfoList = this.findAll(userInfo);
         return new PageInfo<>(userInfoList);
     }
+
+    @Override
+    public void delete(Long userInfoId) {
+        userInfoMapper.delete(userInfoId);
+    }
 }

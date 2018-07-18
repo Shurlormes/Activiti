@@ -25,4 +25,10 @@ public class MemberController {
         return JsonUtil.convertObject2Json(result);
     }
 
+    @DeleteMapping("/{userInfoId}")
+    public String delete(@PathVariable Long userInfoId) {
+        userInfoService.delete(userInfoId);
+        return JsonUtil.convertObject2Json(HashMapResult.success());
+    }
+
 }
