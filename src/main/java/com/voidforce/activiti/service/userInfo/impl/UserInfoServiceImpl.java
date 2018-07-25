@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.voidforce.activiti.bean.UserInfo;
 import com.voidforce.activiti.common.enums.DeletedEnum;
 import com.voidforce.activiti.mapper.userInfo.UserInfoMapper;
+import com.voidforce.activiti.service.activiti.SimpleIdentityService;
 import com.voidforce.activiti.service.userInfo.UserInfoService;
 import com.voidforce.activiti.util.EncodeUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,19 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
+    @Autowired
+    private SimpleIdentityService simpleIdentityService;
+
     @Override
     public Long insert(UserInfo userInfo) {
         UserInfo dbUserInfo = this.getByUsername(userInfo.getUsername());
         if(dbUserInfo == null) {
             userInfo.setPassword(EncodeUtil.encodeByBCrypt(userInfo.getPassword()));
+            userInfo.setDeleted(DeletedEnum.NOT_DELETED.getCode());
             userInfoMapper.insert(userInfo);
+
+            simpleIdentityService.updateUser(userInfo.getUserInfoId().toString(), userInfo.getUsername());
+
             return userInfo.getUserInfoId();
         }
         logger.warn("{} 已存在", userInfo.getUsername());
@@ -60,5 +69,16 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public void delete(Long userInfoId) {
         userInfoMapper.delete(userInfoId);
+    }
+
+    @Override
+    public void update(UserInfo userInfo) {
+        if(StringUtils.isNotEmpty(userInfo.getPassword())) {
+            userInfo.setPassword(EncodeUtil.encodeByBCrypt(userInfo.getPassword()));
+        }
+
+        userInfoMapper.update(userInfo);
+
+        simpleIdentityService.updateUser(userInfo.getUserInfoId().toString(), userInfo.getUsername());
     }
 }

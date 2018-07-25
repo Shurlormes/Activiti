@@ -25,6 +25,28 @@ public class MemberController {
         return JsonUtil.convertObject2Json(result);
     }
 
+    @GetMapping("/{userInfoId}")
+    public String getById(@PathVariable Long userInfoId) {
+        UserInfo userInfo = userInfoService.getById(userInfoId);
+        HashMapResult result = HashMapResult.success(null, userInfo);
+        return JsonUtil.convertObject2Json(result);
+    }
+
+    @PostMapping("")
+    public String add(@ModelAttribute UserInfo userInfo) {
+        userInfoService.insert(userInfo);
+        HashMapResult result = HashMapResult.success();
+        return JsonUtil.convertObject2Json(result);
+    }
+
+    @PutMapping("/{userInfoId}")
+    public String update(@PathVariable Long userInfoId,
+                         @ModelAttribute UserInfo userInfo) {
+        userInfoService.update(userInfo);
+        HashMapResult result = HashMapResult.success(null, userInfo);
+        return JsonUtil.convertObject2Json(result);
+    }
+
     @DeleteMapping("/{userInfoId}")
     public String delete(@PathVariable Long userInfoId) {
         userInfoService.delete(userInfoId);

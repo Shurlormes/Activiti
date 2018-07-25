@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserInfoMapper {
 
-    @Insert(" INERT INTO USER_INFO (USERNAME, PASSWORD, DELETED) VALUES (#{username}, #{password}, #{deleted}) ")
+    @Insert(" INSERT INTO USER_INFO (USERNAME, PASSWORD, DELETED) VALUES (#{username}, #{password}, #{deleted}) ")
     @Options(keyProperty = "userInfoId", useGeneratedKeys = true)
     void insert(UserInfo userInfo);
 
@@ -34,4 +34,7 @@ public interface UserInfoMapper {
 
     @Update(" UPDATE USER_INFO SET DELETED = 1 WHERE USER_INFO_ID = #{userInfoId} ")
     void delete(Long userInfoId);
+
+    @UpdateProvider(method = "update", type = UserInfoMapperProvider.class)
+    void update(UserInfo userInfo);
 }

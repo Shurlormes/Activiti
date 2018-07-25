@@ -2,7 +2,7 @@ package com.voidforce.activiti.mapper.userInfo.provider;
 
 import com.voidforce.activiti.bean.UserInfo;
 import com.voidforce.activiti.common.enums.DeletedEnum;
-import org.apache.ibatis.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 
 public class UserInfoMapperProvider {
 
@@ -15,11 +15,28 @@ public class UserInfoMapperProvider {
             sql.append(" AND USER_INFO_ID = #{userInfoId} ");
         }
 
-        if(userInfo.getUsername() != null) {
+        if(StringUtils.isNotEmpty(userInfo.getUsername())) {
             sql.append(" AND USERNAME = #{username} ");
         }
 
         return sql.toString();
     }
 
+    public String update(UserInfo userInfo) {
+        StringBuilder sql = new StringBuilder(" UPDATE USER_INFO SET ");
+
+        if(StringUtils.isNotEmpty(userInfo.getUsername())) {
+            sql.append(" USERNAME = #{username}, ");
+        }
+
+        if(StringUtils.isNotEmpty(userInfo.getPassword())) {
+            sql.append(" PASSWORD = #{password}, ");
+        }
+
+        sql.deleteCharAt(sql.lastIndexOf(","));
+
+        sql.append(" WHERE USER_INFO_ID = #{userInfoId} ");
+
+        return sql.toString();
+    }
 }

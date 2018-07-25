@@ -18,6 +18,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	                     AuthenticationException arg2) throws IOException {
 		
 		response.setContentType("application/json;charset=utf-8");
+		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		PrintWriter out = response.getWriter();
 		HashMapResult result = HashMapResult.failure("你没有当前操作的权限");
 		out.write(JsonUtil.convertObject2Json(result));
