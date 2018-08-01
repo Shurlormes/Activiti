@@ -22,7 +22,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         HashMapResult result = HashMapResult.success("登录成功", SessionUtil.currentUserDeatils());
-        out.write(JsonUtil.convertObject2Json(result));
+        out.write(JsonUtil.toJson(result));
         out.flush();
         out.close();
     }

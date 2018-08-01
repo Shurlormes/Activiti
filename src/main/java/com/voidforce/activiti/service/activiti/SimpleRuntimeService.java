@@ -21,7 +21,7 @@ import java.util.*;
 @Service
 @Transactional
 public class SimpleRuntimeService {
-	private Logger logger = LoggerFactory.getLogger(SimpleRuntimeService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleRuntimeService.class);
 
 	@Autowired
 	private RepositoryService repositoryService;

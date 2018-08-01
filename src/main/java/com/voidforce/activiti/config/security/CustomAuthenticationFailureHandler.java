@@ -31,7 +31,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         } else {
             result = HashMapResult.failure("登录失败!");
         }
-        out.write(JsonUtil.convertObject2Json(result));
+        out.write(JsonUtil.toJson(result));
         out.flush();
         out.close();
     }

@@ -1,7 +1,7 @@
 package com.voidforce.activiti.service.role.impl;
 
 import com.voidforce.activiti.bean.Role;
-import com.voidforce.activiti.common.enums.DeletedEnum;
+import com.voidforce.activiti.common.constant.CommonConstant;
 import com.voidforce.activiti.mapper.role.RoleMapper;
 import com.voidforce.activiti.service.role.RoleService;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
-    private Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Autowired
     private RoleMapper roleMapper;
@@ -33,11 +33,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getByRole(String role) {
-        return roleMapper.getByRole(role, DeletedEnum.NOT_DELETED.getCode());
+        return roleMapper.getByRole(role, CommonConstant.NOT_DELETED);
     }
 
     @Override
     public List<Role> findByUserInfoId(Long userInfoId) {
-        return roleMapper.findByUserInfoId(userInfoId, DeletedEnum.NOT_DELETED.getCode());
+        return roleMapper.findByUserInfoId(userInfoId, CommonConstant.NOT_DELETED);
     }
 }

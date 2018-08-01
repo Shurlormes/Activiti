@@ -21,36 +21,32 @@ public class MemberController {
                           @RequestParam(required = false, defaultValue = CommonConstant.DEFAULT_PAGE_LIMIT) Integer limit,
                           @ModelAttribute UserInfo userInfo) {
         PageInfo<UserInfo> userInfoPageInfo = userInfoService.findAllForPage(page, limit, userInfo);
-        HashMapResult result = HashMapResult.success(null, userInfoPageInfo);
-        return JsonUtil.convertObject2Json(result);
+        return JsonUtil.toJson(HashMapResult.success(null, userInfoPageInfo));
     }
 
     @GetMapping("/{userInfoId}")
     public String getById(@PathVariable Long userInfoId) {
         UserInfo userInfo = userInfoService.getById(userInfoId);
-        HashMapResult result = HashMapResult.success(null, userInfo);
-        return JsonUtil.convertObject2Json(result);
+        return JsonUtil.toJson(HashMapResult.success(null, userInfo));
     }
 
     @PostMapping("")
-    public String add(@ModelAttribute UserInfo userInfo) {
+    public String insert(@ModelAttribute UserInfo userInfo) {
         userInfoService.insert(userInfo);
-        HashMapResult result = HashMapResult.success();
-        return JsonUtil.convertObject2Json(result);
+        return JsonUtil.toJson(HashMapResult.success());
     }
 
     @PutMapping("/{userInfoId}")
     public String update(@PathVariable Long userInfoId,
                          @ModelAttribute UserInfo userInfo) {
         userInfoService.update(userInfo);
-        HashMapResult result = HashMapResult.success(null, userInfo);
-        return JsonUtil.convertObject2Json(result);
+        return JsonUtil.toJson(HashMapResult.success(null, userInfo));
     }
 
     @DeleteMapping("/{userInfoId}")
     public String delete(@PathVariable Long userInfoId) {
         userInfoService.delete(userInfoId);
-        return JsonUtil.convertObject2Json(HashMapResult.success());
+        return JsonUtil.toJson(HashMapResult.success());
     }
 
 }

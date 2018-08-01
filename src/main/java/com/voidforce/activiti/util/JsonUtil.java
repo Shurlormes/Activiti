@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 public class JsonUtil {
-    public static <T> T convertJson2Object(String json, Class<T> valueType) {
+    public static <T> T toObject(String json, Class<T> valueType) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(json, valueType);
@@ -16,7 +16,7 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T convertJson2Object(String json, Class<T> collectionClass, Class<?>... elementClasses) {
+    public static <T> T toObject(String json, Class<T> collectionClass, Class<?>... elementClasses) {
         ObjectMapper mapper = new ObjectMapper();
         JavaType javaType = mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
         try {
@@ -27,7 +27,7 @@ public class JsonUtil {
         }
     }
 
-    public static String convertObject2Json(Object object) {
+    public static String toJson(Object object) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.writeValueAsString(object);

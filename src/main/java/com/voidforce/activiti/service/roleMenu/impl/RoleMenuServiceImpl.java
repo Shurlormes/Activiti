@@ -1,7 +1,7 @@
 package com.voidforce.activiti.service.roleMenu.impl;
 
 import com.voidforce.activiti.bean.RoleMenu;
-import com.voidforce.activiti.common.enums.DeletedEnum;
+import com.voidforce.activiti.common.constant.CommonConstant;
 import com.voidforce.activiti.mapper.roleMenu.RoleMenuMapper;
 import com.voidforce.activiti.service.roleMenu.RoleMenuService;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class RoleMenuServiceImpl implements RoleMenuService {
-    private Logger logger = LoggerFactory.getLogger(RoleMenuServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RoleMenuServiceImpl.class);
 
     @Autowired
     private RoleMenuMapper roleMenuMapper;
@@ -31,7 +31,7 @@ public class RoleMenuServiceImpl implements RoleMenuService {
 
     @Override
     public RoleMenu getByRoleIdAndMenuId(Long roleId, Long menuId) {
-        return roleMenuMapper.getByRoleIdAndMenuId(roleId, menuId, DeletedEnum.NOT_DELETED.getCode());
+        return roleMenuMapper.getByRoleIdAndMenuId(roleId, menuId, CommonConstant.NOT_DELETED);
     }
 
     @Override

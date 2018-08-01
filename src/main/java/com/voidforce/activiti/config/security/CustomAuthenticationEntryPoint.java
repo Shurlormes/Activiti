@@ -21,7 +21,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 		PrintWriter out = response.getWriter();
 		HashMapResult result = HashMapResult.failure("你没有当前操作的权限");
-		out.write(JsonUtil.convertObject2Json(result));
+		out.write(JsonUtil.toJson(result));
 		out.flush();
 		out.close();
 	}

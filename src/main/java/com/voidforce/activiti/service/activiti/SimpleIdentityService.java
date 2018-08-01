@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SimpleIdentityService {
-	private Logger logger = LoggerFactory.getLogger(SimpleIdentityService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleIdentityService.class);
 
 	@Autowired
 	private IdentityService identityService;
@@ -33,12 +33,12 @@ public class SimpleIdentityService {
 			identityService.saveUser(user);
 		}
 
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 
 	public String deleteUser(String id) {
 		identityService.deleteUser(id);
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 
 	public String updateGroup(String id, String name) {
@@ -55,35 +55,35 @@ public class SimpleIdentityService {
 			identityService.saveGroup(group);
 		}
 
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 
 	public String deleteGroup(String id) {
 		identityService.deleteGroup(id);
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 
 	public String updateMemberShip(String userId, String groupId) {
 		User user = identityService.createUserQuery().userId(userId).singleResult();
 		if(user == null) {
 			logger.warn("user {} not exists", userId);
-			return JsonUtil.convertObject2Json(HashMapResult.failure("user " + userId + " not exists"));
+			return JsonUtil.toJson(HashMapResult.failure("user " + userId + " not exists"));
 		}
 
 		Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
 		if(group == null) {
 			logger.warn("group {} not exists", groupId);
-			return JsonUtil.convertObject2Json(HashMapResult.failure("group " + groupId + " not exists"));
+			return JsonUtil.toJson(HashMapResult.failure("group " + groupId + " not exists"));
 		}
 
 		this.deleteMemberShip(userId, groupId);
 		identityService.createMembership(userId, groupId);
 
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 
 	public String deleteMemberShip(String userId, String groupId) {
 		identityService.deleteMembership(userId, groupId);
-		return JsonUtil.convertObject2Json(HashMapResult.success());
+		return JsonUtil.toJson(HashMapResult.success());
 	}
 }

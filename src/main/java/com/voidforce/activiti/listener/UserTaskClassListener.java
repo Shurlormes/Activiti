@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class UserTaskClassListener implements TaskListener {
 
-	private Logger logger = LoggerFactory.getLogger(UserTaskClassListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserTaskClassListener.class);
 
 	private FixedValue value;
 

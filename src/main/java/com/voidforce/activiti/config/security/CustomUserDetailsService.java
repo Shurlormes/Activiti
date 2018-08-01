@@ -22,7 +22,7 @@ import java.util.*;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-    Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     @Autowired
     private UserInfoService userInfoService;

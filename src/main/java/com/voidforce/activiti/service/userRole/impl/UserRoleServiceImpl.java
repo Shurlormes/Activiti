@@ -1,7 +1,7 @@
 package com.voidforce.activiti.service.userRole.impl;
 
 import com.voidforce.activiti.bean.UserRole;
-import com.voidforce.activiti.common.enums.DeletedEnum;
+import com.voidforce.activiti.common.constant.CommonConstant;
 import com.voidforce.activiti.mapper.userRole.UserRoleMapper;
 import com.voidforce.activiti.service.userRole.UserRoleService;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserRoleServiceImpl implements UserRoleService {
 
-    private Logger logger = LoggerFactory.getLogger(UserRoleServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 
     @Autowired
     private UserRoleMapper userRoleMapper;
@@ -32,7 +32,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     public UserRole getByUserInfoIdAndRoleId(Long userInfoId, Long roleId) {
-        return userRoleMapper.getByUserInfoIdAndRoleId(userInfoId, roleId, DeletedEnum.NOT_DELETED.getCode());
+        return userRoleMapper.getByUserInfoIdAndRoleId(userInfoId, roleId, CommonConstant.NOT_DELETED);
     }
 
     @Override

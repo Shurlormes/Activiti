@@ -23,7 +23,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SimpleHistoryService {
-	private Logger logger = LoggerFactory.getLogger(SimpleHistoryService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleHistoryService.class);
 
 	@Autowired
 	private HistoryService historyService;

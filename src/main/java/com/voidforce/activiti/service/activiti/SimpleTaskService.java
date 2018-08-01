@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 @Transactional
 public class SimpleTaskService {
-	private Logger logger = LoggerFactory.getLogger(SimpleTaskService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleTaskService.class);
 
 	@Autowired
 	private TaskService taskService;

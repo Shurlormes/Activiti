@@ -1,13 +1,13 @@
 package com.voidforce.activiti.mapper.userInfo.provider;
 
 import com.voidforce.activiti.bean.UserInfo;
-import com.voidforce.activiti.common.enums.DeletedEnum;
+import com.voidforce.activiti.common.constant.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 
 public class UserInfoMapperProvider {
 
     public String findAll(UserInfo userInfo) {
-        userInfo.setDeleted(DeletedEnum.NOT_DELETED.getCode());
+        userInfo.setDeleted(CommonConstant.NOT_DELETED);
         StringBuilder sql = new StringBuilder(" SELECT * FROM USER_INFO " +
                 " WHERE DELETED = #{deleted} ");
 
@@ -16,7 +16,8 @@ public class UserInfoMapperProvider {
         }
 
         if(StringUtils.isNotEmpty(userInfo.getUsername())) {
-            sql.append(" AND USERNAME = #{username} ");
+            userInfo.setUsername("%" + userInfo.getUsername() + "%");
+            sql.append(" AND USERNAME LIKE #{username} ");
         }
 
         return sql.toString();

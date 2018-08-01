@@ -12,4 +12,10 @@ public interface MenuService {
 
     List<Menu> findByRoleIds(String roleIds);
 
+    List<Menu> findAll(Menu menu);
+
+    void delete(Long menuId);
+
+    void update(Menu menu);
+
 }

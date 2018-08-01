@@ -18,6 +18,8 @@ public class Menu {
 
     private Integer deleted;
 
+    private boolean leaf;
+
     public Long getMenuId() {
         return menuId;
     }
@@ -80,5 +82,13 @@ public class Menu {
 
     public void setDeleted(Integer deleted) {
         this.deleted = deleted;
+    }
+
+    public boolean isLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(boolean leaf) {
+        this.leaf = leaf;
     }
 }

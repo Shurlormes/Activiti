@@ -3,7 +3,8 @@ package com.voidforce.activiti.service.userInfo.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.voidforce.activiti.bean.UserInfo;
-import com.voidforce.activiti.common.enums.DeletedEnum;
+import com.voidforce.activiti.common.constant.CommonConstant;
+import com.voidforce.activiti.exception.BaseException;
 import com.voidforce.activiti.mapper.userInfo.UserInfoMapper;
 import com.voidforce.activiti.service.activiti.SimpleIdentityService;
 import com.voidforce.activiti.service.userInfo.UserInfoService;
@@ -20,7 +21,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserInfoServiceImpl implements UserInfoService {
-    private Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
 
     @Autowired
     private UserInfoMapper userInfoMapper;
@@ -33,25 +34,25 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo dbUserInfo = this.getByUsername(userInfo.getUsername());
         if(dbUserInfo == null) {
             userInfo.setPassword(EncodeUtil.encodeByBCrypt(userInfo.getPassword()));
-            userInfo.setDeleted(DeletedEnum.NOT_DELETED.getCode());
+            userInfo.setDeleted(CommonConstant.NOT_DELETED);
             userInfoMapper.insert(userInfo);
 
             simpleIdentityService.updateUser(userInfo.getUserInfoId().toString(), userInfo.getUsername());
 
             return userInfo.getUserInfoId();
         }
-        logger.warn("{} 已存在", userInfo.getUsername());
-        return dbUserInfo.getUserInfoId();
+        logger.error("名称 {} 已存在", userInfo.getUsername());
+        throw new BaseException("名称 " + userInfo.getUsername() + " 已存在");
     }
 
     @Override
     public UserInfo getById(Long userInfoId) {
-        return userInfoMapper.getById(userInfoId, DeletedEnum.NOT_DELETED.getCode());
+        return userInfoMapper.getById(userInfoId, CommonConstant.NOT_DELETED);
     }
 
     @Override
     public UserInfo getByUsername(String username) {
-        return userInfoMapper.getByUsername(username, DeletedEnum.NOT_DELETED.getCode());
+        return userInfoMapper.getByUsername(username, CommonConstant.NOT_DELETED);
     }
 
     @Override
@@ -73,6 +74,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public void update(UserInfo userInfo) {
+        UserInfo dbUserInfo = this.getByUsername(userInfo.getUsername());
+        if(dbUserInfo != null && !dbUserInfo.getUserInfoId().equals(userInfo.getUserInfoId())) {
+            logger.error("名称 {} 已存在", userInfo.getUsername());
+            throw new BaseException("名称 " + userInfo.getUsername() + " 已存在");
+        }
+
         if(StringUtils.isNotEmpty(userInfo.getPassword())) {
             userInfo.setPassword(EncodeUtil.encodeByBCrypt(userInfo.getPassword()));
         }
