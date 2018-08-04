@@ -22,6 +22,12 @@ public class MenuController {
 		return JsonUtil.toJson(HashMapResult.success(null, menuList));
 	}
 
+	@GetMapping("/recursive-children/{menuId}")
+	public String findAllRecursiveChildren(@PathVariable Long menuId) {
+		List<Menu> menuList = menuService.findAllRecursiveChildren(menuId);
+		return JsonUtil.toJson(HashMapResult.success(null, menuList));
+	}
+
 	@PostMapping("")
 	public String insert(@ModelAttribute Menu menu) {
 		menuService.insert(menu);

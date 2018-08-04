@@ -68,4 +68,18 @@ public class MenuServiceImpl implements MenuService {
 
         menuMapper.update(menu);
     }
+
+    @Override
+    public List<Menu> findAllRecursiveChildren(Long parentId) {
+        Menu menu = new Menu();
+        menu.setParentId(parentId);
+        List<Menu> menuList = this.findAll(menu);
+        menuList.forEach(i -> {
+            if(!i.isLeaf()) {
+                List<Menu> children = this.findAllRecursiveChildren(i.getMenuId());
+                i.setChildren(children);
+            }
+        });
+        return menuList;
+    }
 }

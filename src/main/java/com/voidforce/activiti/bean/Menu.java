@@ -1,5 +1,7 @@
 package com.voidforce.activiti.bean;
 
+import java.util.List;
+
 public class Menu {
 
     private Long menuId;
@@ -19,6 +21,8 @@ public class Menu {
     private Integer deleted;
 
     private boolean leaf;
+
+    private List<Menu> children;
 
     public Long getMenuId() {
         return menuId;
@@ -90,5 +94,13 @@ public class Menu {
 
     public void setLeaf(boolean leaf) {
         this.leaf = leaf;
+    }
+
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
     }
 }

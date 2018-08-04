@@ -18,4 +18,6 @@ public interface MenuService {
 
     void update(Menu menu);
 
+    List<Menu> findAllRecursiveChildren(Long parentId);
+
 }
