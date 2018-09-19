@@ -1,4 +1,4 @@
-package com.voidforce.activiti.util;
+package com.voidforce.activiti.common.util;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;

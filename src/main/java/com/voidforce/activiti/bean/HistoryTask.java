@@ -1,4 +1,4 @@
-package com.voidforce.activiti.bean.activiti;
+package com.voidforce.activiti.bean;
 
 import java.util.Date;
 

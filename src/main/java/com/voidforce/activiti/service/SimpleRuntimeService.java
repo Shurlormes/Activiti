@@ -1,4 +1,4 @@
-package com.voidforce.activiti.service.activiti;
+package com.voidforce.activiti.service;
 
 import com.voidforce.activiti.common.bean.HashMapResult;
 import org.activiti.engine.IdentityService;

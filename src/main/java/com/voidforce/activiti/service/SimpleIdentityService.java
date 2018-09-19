@@ -1,7 +1,7 @@
-package com.voidforce.activiti.service.activiti;
+package com.voidforce.activiti.service;
 
 import com.voidforce.activiti.common.bean.HashMapResult;
-import com.voidforce.activiti.util.JsonUtil;
+import com.voidforce.activiti.common.util.JsonUtil;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
