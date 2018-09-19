@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-@EnableWebSecurity
 @MapperScan("com.voidforce.activiti.mapper")
 public class Application {
     public static void main(String[] args) {

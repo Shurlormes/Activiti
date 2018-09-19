@@ -1,5 +1,4 @@
 import com.voidforce.activiti.Application;
-import com.voidforce.activiti.service.userInfo.UserInfoService;
 import com.voidforce.activiti.task.ServiceTask;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
