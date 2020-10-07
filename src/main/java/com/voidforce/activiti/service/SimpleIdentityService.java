@@ -1,7 +1,6 @@
 package com.voidforce.activiti.service;
 
 import com.voidforce.activiti.common.bean.HashMapResult;
-import com.voidforce.activiti.common.util.JsonUtil;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -19,10 +18,9 @@ public class SimpleIdentityService {
 	@Autowired
 	private IdentityService identityService;
 
-	public String updateUser(String id, String name) {
+	public HashMapResult updateUser(String id, String name) {
 		User dbUser = identityService.createUserQuery().userId(id).singleResult();
 		if (dbUser != null) {
-			logger.warn("user {}-{} already exists, will do update", id, name);
 			if(!name.equals(dbUser.getFirstName())) {
 				dbUser.setFirstName(name);
 				identityService.saveUser(dbUser);
@@ -33,18 +31,17 @@ public class SimpleIdentityService {
 			identityService.saveUser(user);
 		}
 
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 
-	public String deleteUser(String id) {
+	public HashMapResult deleteUser(String id) {
 		identityService.deleteUser(id);
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 
-	public String updateGroup(String id, String name) {
+	public HashMapResult updateGroup(String id, String name) {
 		Group dbGroup = identityService.createGroupQuery().groupId(id).singleResult();
 		if (dbGroup != null) {
-			logger.warn("group {}-{} already exists, will do update", id, name);
 			if(!name.equals(dbGroup.getName())) {
 				dbGroup.setName(name);
 				identityService.saveGroup(dbGroup);
@@ -55,35 +52,34 @@ public class SimpleIdentityService {
 			identityService.saveGroup(group);
 		}
 
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 
-	public String deleteGroup(String id) {
+	public HashMapResult deleteGroup(String id) {
 		identityService.deleteGroup(id);
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 
-	public String updateMemberShip(String userId, String groupId) {
+	public HashMapResult updateMemberShip(String userId, String groupId) {
 		User user = identityService.createUserQuery().userId(userId).singleResult();
 		if(user == null) {
-			logger.warn("user {} not exists", userId);
-			return JsonUtil.toJson(HashMapResult.failure("user " + userId + " not exists"));
+			logger.error("user {} not exists", userId);
+			return HashMapResult.failure("user " + userId + " not exists");
 		}
 
 		Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
 		if(group == null) {
-			logger.warn("group {} not exists", groupId);
-			return JsonUtil.toJson(HashMapResult.failure("group " + groupId + " not exists"));
+			logger.error("group {} not exists", groupId);
+			return HashMapResult.failure("group " + groupId + " not exists");
 		}
 
-		this.deleteMemberShip(userId, groupId);
 		identityService.createMembership(userId, groupId);
 
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 
-	public String deleteMemberShip(String userId, String groupId) {
+	public HashMapResult deleteMemberShip(String userId, String groupId) {
 		identityService.deleteMembership(userId, groupId);
-		return JsonUtil.toJson(HashMapResult.success());
+		return HashMapResult.success();
 	}
 }

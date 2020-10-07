@@ -7,17 +7,15 @@ public class HashMapResult extends HashMap<Object, Object> {
 
     private static final String MESSAGE = "message";
 
-    private static final String DATA = "data";
-
     public HashMapResult() {
         super();
         this.put(SUCCESS, true);
     }
 
-    public void success(Boolean isSuccess, String message, Object data) {
+    public HashMapResult(Boolean isSuccess, String message) {
+        super();
         this.put(SUCCESS, isSuccess);
         this.put(MESSAGE, message);
-        this.put(DATA, data);
     }
 
     public static HashMapResult success() {
@@ -25,31 +23,15 @@ public class HashMapResult extends HashMap<Object, Object> {
     }
 
     public static HashMapResult success(String message) {
-        HashMapResult result = new HashMapResult();
-        result.success(true, message, null);
-        return result;
-    }
-
-    public static HashMapResult success(String message, Object data) {
-        HashMapResult result = new HashMapResult();
-        result.success(true, message, data);
-        return result;
+        return new HashMapResult(true, message);
     }
 
     public static HashMapResult failure(String message) {
-        HashMapResult result = new HashMapResult();
-        result.success(false, message, null);
-        return result;
-    }
-
-    public static HashMapResult failure(String message, Object data) {
-        HashMapResult result = new HashMapResult();
-        result.success(false, message, data);
-        return result;
+        return new HashMapResult(false, message);
     }
 
     public Boolean isSuccess() {
-        return Boolean.valueOf(this.getOrDefault(SUCCESS, true).toString());
+        return Boolean.valueOf(this.get(SUCCESS).toString());
     }
 
     public Boolean isFailure() {
@@ -60,7 +42,7 @@ public class HashMapResult extends HashMap<Object, Object> {
         return this.getOrDefault(MESSAGE, "").toString();
     }
 
-    public Object getData() {
-        return this.getOrDefault(DATA, null);
+    public void setMessage(String message) {
+        this.put(MESSAGE, message);
     }
 }
